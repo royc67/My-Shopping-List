@@ -5,12 +5,11 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 const shoppingList = [
-    {id:"1",productName:"Banana"},
-    {id:"2",productName:"Apple"},
-    {id:"3",productName:"Milk"},
-    {id:"4",productName:"Pork"},
-    {id:"5",productName:"Avocado"},
-    {id:"6",productName:"Coffee"}
+    {id:"Banana",amount: 1, price: 50},
+    {id:"air-pods",amount: 2, price: 100},
+    {id:"neckless",amount: 3, price: 150},
+    {id:"blade",amount: 4, price: 200}
+    
 ]
 app.get('/', (req,res)=>{
     res.send('Hello World!')
@@ -56,4 +55,4 @@ app.delete('/products/:id', (req, res) => {
     })
 })
 
-app.listen(3000)
+app.listen(3005)
