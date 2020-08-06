@@ -30,6 +30,10 @@ app.get('/products/:id',(req, res) => {
     })
 })
 
-
+//a POST request to /products create new product object in the static array and return the new product object
+app.post('/products', (req, res) => {
+    shoppingList.push(req.body);
+    res.send(req.body);
+})
 
 app.listen(3000)
