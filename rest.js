@@ -21,6 +21,15 @@ app.get('/products', (req, res) => {
     res.send(shoppingList);
 })
 
+//a GET request to /products/{id} returns the details of product 123 from the static array
+app.get('/products/:id',(req, res) => {
+    shoppingList.forEach((product) => {
+        if (product.id == req.params.id)
+            res.send(product);
+
+    })
+})
+
 
 
 app.listen(3000)
