@@ -36,4 +36,16 @@ app.post('/products', (req, res) => {
     res.send(req.body);
 })
 
+//a PUT request to /products/{id} get in the body params updated product object, update product object and return the updated product
+app.put('/products/:id',(req, res) => {
+    shoppingList.forEach((product, i) => {
+        if (product.id == req.params.id){
+            shoppingList[i]=req.body;
+            res.send(shoppingList[i]);
+        }
+    })
+})
+
+
+
 app.listen(3000)
