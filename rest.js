@@ -16,4 +16,11 @@ app.get('/', (req,res)=>{
     res.send('Hello World!')
 })
 
+//a GET request to /products/ returns a list of products object from a static array
+app.get('/products', (req, res) => {
+    res.send(shoppingList);
+})
+
+
+
 app.listen(3000)
