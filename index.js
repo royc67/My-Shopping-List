@@ -48,7 +48,7 @@ app.put('/products/:id',(req, res) => {
 //a DELETE request to /products/{id} delete a product from the static array
 app.delete('/products/:id', (req, res) => {
     shoppingList.forEach((product, i) =>{
-        if (product.id == req.params.id){
+        if (product.id === req.params.id){
             shoppingList.splice(i,1);
             res.send(shoppingList)
         }

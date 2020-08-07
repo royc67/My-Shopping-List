@@ -3,6 +3,13 @@ const inputA = document.getElementById("amount");
 const inputP = document.getElementById('price');
 const addBtn = document.getElementById("addBtn");
 const listTable = document.getElementById("body");
+const saveBtn = document.createElement("button");
+saveBtn.innerText = "save"
+let editInputA = document.createElement("input");
+editInputA.type = "number";
+let editInputP = document.createElement("input");
+editInputP.type = "number";
+const searchItem = document.getElementById("search")
 
 function makeRow(id, amount, price){
     let row = document.createElement("tr");
@@ -13,7 +20,7 @@ function makeRow(id, amount, price){
     cell2.innerHTML = "Amount: " + amount
     cell3.innerHTML = "Price: " + price +"$"
 
-    const newObj = {
+    let newObj = {
         "id": id,
         "amount": amount,
         "price": price
@@ -22,25 +29,40 @@ function makeRow(id, amount, price){
     const deleteBtn = document.createElement("button")
     deleteBtn.innerHTML = 'X';
     row.appendChild(deleteBtn);
-    deleteBtn.onclick = function() {
+    deleteBtn.onclick = function() { 
+        deleteProducts(id);
         listTable.removeChild(row);
-        deleteProducts();
     }
+    
 
     
     const editBtn = document.createElement("button");
     editBtn.innerHTML = "Edit";
     row.appendChild(editBtn);
+    editBtn.onclick = function() {
+        row.appendChild(editInputA);
+        editInputA.value = amount;
+        row.appendChild(editInputP);
+        editInputP.value = price;
+        row.appendChild(saveBtn);
+        saveBtn.onclick = function() {
+            editProducts(id);
+            listTable.removeChild(row);
+
+        }
+
+    }
     
     listTable.appendChild(row)
     
-     
+     console.log(newObj)
      return newObj;
+     
 
 }
 
 
-// const newPost = makeRow(input.value, inputA.value, inputP.value)
+
 
 async function postProducts() {
 const newShit = makeRow(input.value, inputA.value, inputP.value);
@@ -48,8 +70,13 @@ const { data } = await axios.post(`http://localhost:3005/products`, newShit)
 }
 
 addBtn.onclick = function(){
-    // makeRow(input.value, inputA.value, inputP.value);
+    if (input.value === ""){
+        alert("Item is required...")
+
+    } else {
+   
     postProducts();
+    }
     
 }
 
@@ -64,7 +91,14 @@ async function getProducts() {
 
 getProducts();
 
-async function deleteProducts() {
-    const { data } = await axios.delete(`http://localhost:3005/products/:id` )
+async function deleteProducts(d) {
+
+    const { data } = await axios.delete(`http://localhost:3005/products/${d}`)
     
 }
+
+async function editProducts(ed) {
+    const edited = makeRow(ed, editInputA.value, editInputP.value)
+    const { data } = await axios.put(`http://localhost:3005/products/${ed}`, edited )
+}
+
